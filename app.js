@@ -1,6 +1,4 @@
-/**
- * Module dependencies.
- */
+//region MODULE DEPENDENCIES
 
 var express = require('express')
     , http = require('http')
@@ -22,6 +20,7 @@ app.use(express.cookieParser('your secret here'));
 app.use(express.session());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
+//endregion
 
 //region MONGODB CONNECTION CONFIGURATION
 if(process.env.VCAP_SERVICES){
@@ -60,6 +59,8 @@ if ('development' == app.get('env')) {
 var mongourl = generate_mongo_url(mongo);
 mongoose.connect(mongourl);
 //endregion
+
+// region HTTP OPERATIONS
 
 app.get('/api', function(req, res){
     res.send("API ver. 1.0");
@@ -394,6 +395,10 @@ app.put('/api/blogposts/:id', function(req, res){
 // DELETE: /api/Entity/:id  -> Deletes Entity
     //TODO: Yapılacak...
 
+// endregion
+
+// region CREATE SERVER
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
+// endregion
